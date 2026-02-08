@@ -1,0 +1,5 @@
+# Local clones (not part of this project)
+cross-modal-time-series/
+fidel-ts-fork/
+
+.venv/
