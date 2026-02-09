@@ -15,3 +15,7 @@ data/*
 !data/.gitkeep
 # Run outputs
 reports/*
+# LaTeX intermediates
+docs/*.aux
+docs/*.log
+docs/*.out
