@@ -7,3 +7,7 @@ venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
+.env
+.DS_Store
+.pytest_cache/
+# Local CSV panels / outputs under data/
