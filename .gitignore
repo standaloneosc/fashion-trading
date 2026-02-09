@@ -11,3 +11,7 @@ __pycache__/
 .DS_Store
 .pytest_cache/
 # Local CSV panels / outputs under data/
+data/*
+!data/.gitkeep
+# Run outputs
+reports/*
