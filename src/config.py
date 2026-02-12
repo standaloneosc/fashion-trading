@@ -121,3 +121,16 @@ class Settings:
             "John Elliott",
             "Kith",
             "Mackage",
+            "Miharayasuhiro",
+            "N.Hoolywood",
+            "Nanamica",
+            "Norse Projects",
+            "Porter Yoshida",
+            "RRL",
+            "Satisfy",
+            "Snow Peak",
+            "Taion",
+            "Veilance",
+            "WTAPS",
+        ]
+    )
