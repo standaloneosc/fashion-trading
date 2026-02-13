@@ -134,3 +134,17 @@ class Settings:
             "WTAPS",
         ]
     )
+    categories: dict[str, list[str]] = field(
+        default_factory=lambda: {
+            "outerwear": ["hoodie", "jacket", "coat", "parka", "fleece"],
+            "top": ["shirt", "tee", "t-shirt", "sweater", "knit"],
+            "bottoms": ["pants", "trousers", "jeans", "cargo", "shorts"],
+            "footwear": ["boots", "sneakers", "shoes", "ramones", "loafer"],
+            "accessories": ["bag", "cap", "hat", "wallet", "belt"],
+        }
+    )
+    size_patterns: list[str] = field(
+        default_factory=lambda: [
+            r"\bxxs\b",
+            r"\bxs\b",
+            r"\bs\b",
