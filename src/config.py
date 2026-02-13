@@ -175,3 +175,16 @@ class Settings:
     demand_shock_scale: float = 0.60
     regime_shift_dispersion_scale: float = 1.50
     adversarial_price_scale: float = 1.75
+    backtest_rollouts: int = field(default_factory=lambda: max(1, int(os.getenv("BACKTEST_ROLLOUTS", "6"))))
+    simulator_seed_base: int = field(default_factory=lambda: int(os.getenv("SIMULATOR_SEED_BASE", "42")))
+    simulator_demand_multiplier: float = field(
+        default_factory=lambda: float(os.getenv("SIMULATOR_DEMAND_MULTIPLIER", "1.03"))
+    )
+
+
+def ensure_directories() -> None:
+    for path in (DATA_DIR, REPORTS_DIR, PLOTS_DIR):
+        path.mkdir(parents=True, exist_ok=True)
+
+
+SETTINGS = Settings()
