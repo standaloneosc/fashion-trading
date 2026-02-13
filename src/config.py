@@ -161,3 +161,17 @@ class Settings:
     momentum_window_days: int = 30
     dispersion_window_days: int = 30
     fee_rate: float = 0.12
+    fixed_fee: float = 0.0
+    default_shipping_cost: float = 12.0
+    hold_cost_bps_day: float = 5.0
+    slip_mean: float = -0.02
+    slip_std: float = 0.03
+    max_inventory: int = field(default_factory=lambda: int(os.getenv("MAX_INVENTORY", "48")))
+    max_brand_inventory: int = field(default_factory=lambda: int(os.getenv("MAX_BRAND_INVENTORY", "8")))
+    starting_cash: float = 25000.0
+    z_buy: float = -1.0
+    liquidity_min: float = 1.0
+    p_target: float = 0.60
+    demand_shock_scale: float = 0.60
+    regime_shift_dispersion_scale: float = 1.50
+    adversarial_price_scale: float = 1.75
