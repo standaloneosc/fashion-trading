@@ -148,3 +148,16 @@ class Settings:
             r"\bxxs\b",
             r"\bxs\b",
             r"\bs\b",
+            r"\bm\b",
+            r"\bl\b",
+            r"\bxl\b",
+            r"\bxxl\b",
+            r"\b\d{2}\b",
+            r"\b\d{1,2}\.\d\b",
+        ]
+    )
+    horizon_days: int = 14
+    liquidity_windows: tuple[int, int] = (7, 30)
+    momentum_window_days: int = 30
+    dispersion_window_days: int = 30
+    fee_rate: float = 0.12
