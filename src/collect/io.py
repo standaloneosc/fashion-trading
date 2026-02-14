@@ -16,3 +16,8 @@ def _load_csv(path: Path) -> pd.DataFrame:
 def _concat_non_empty(frames: list[pd.DataFrame]) -> pd.DataFrame:
     non_empty = [frame for frame in frames if not frame.empty]
     if not non_empty:
+        return pd.DataFrame()
+    return pd.concat(non_empty, ignore_index=True)
+
+
+def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
