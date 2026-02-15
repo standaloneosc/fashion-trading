@@ -21,3 +21,7 @@ def _concat_non_empty(frames: list[pd.DataFrame]) -> pd.DataFrame:
 
 
 def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Load multi-venue panels from CSV files under ``data/``."""
+    ensure_directories()
+
+    listings_path = DATA_DIR / "listings_snapshot.csv"
