@@ -34,3 +34,8 @@ def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     listings = _load_csv(listings_path)
     if listings.empty:
         raise FileNotFoundError(
+            f"No listing data at {listings_path}. "
+            "Add a listings snapshot CSV under data/ (see README)."
+        )
+
+    supplemental_listings = [
