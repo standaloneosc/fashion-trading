@@ -25,3 +25,8 @@ def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     ensure_directories()
 
     listings_path = DATA_DIR / "listings_snapshot.csv"
+    sold_paths = [
+        DATA_DIR / "sold_items.csv",
+        DATA_DIR / "depop_sold_items.csv",
+        DATA_DIR / "grailed_sold_items.csv",
+    ]
