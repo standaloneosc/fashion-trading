@@ -30,3 +30,7 @@ def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
         DATA_DIR / "depop_sold_items.csv",
         DATA_DIR / "grailed_sold_items.csv",
     ]
+
+    listings = _load_csv(listings_path)
+    if listings.empty:
+        raise FileNotFoundError(
