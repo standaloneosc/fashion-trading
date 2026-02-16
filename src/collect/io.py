@@ -39,3 +39,7 @@ def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
         )
 
     supplemental_listings = [
+        _load_csv(DATA_DIR / "depop_listings.csv"),
+        _load_csv(DATA_DIR / "grailed_listings.csv"),
+    ]
+    listings = _concat_non_empty([listings, *supplemental_listings]).drop_duplicates(
