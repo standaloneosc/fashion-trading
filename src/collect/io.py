@@ -48,3 +48,7 @@ def load_market_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     sold = _concat_non_empty([_load_csv(path) for path in sold_paths])
     if sold.empty:
         raise FileNotFoundError(
+            "No sold history loaded. "
+            "Ensure sold_items.csv (and optional depop_sold_items.csv, grailed_sold_items.csv) exist under data/."
+        )
+    return listings, sold
