@@ -22,3 +22,9 @@ def infer_category(title: str | None, category: str | None) -> str:
 
     title = str(title or "").lower()
     for canonical, keywords in SETTINGS.categories.items():
+        if any(keyword in title for keyword in keywords):
+            return canonical
+    return "other"
+
+
+def infer_size(title: str | None, size: str | None) -> str:
