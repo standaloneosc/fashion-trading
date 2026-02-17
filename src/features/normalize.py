@@ -16,3 +16,9 @@ def canonicalize_brand(title: str | None, brand: str | None) -> str:
 
 
 def infer_category(title: str | None, category: str | None) -> str:
+    category = str(category or "").strip().lower()
+    if category:
+        return category
+
+    title = str(title or "").lower()
+    for canonical, keywords in SETTINGS.categories.items():
