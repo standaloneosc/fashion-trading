@@ -34,3 +34,9 @@ def infer_size(title: str | None, size: str | None) -> str:
 
     title = str(title or "").lower()
     for pattern in SETTINGS.size_patterns:
+        match = re.search(pattern, title)
+        if match:
+            return match.group(0).upper()
+    return "UNK"
+
+
