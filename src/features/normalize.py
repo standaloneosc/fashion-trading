@@ -40,3 +40,9 @@ def infer_size(title: str | None, size: str | None) -> str:
     return "UNK"
 
 
+def normalize_market_frame(df: pd.DataFrame) -> pd.DataFrame:
+    normalized = df.copy()
+    if normalized.empty:
+        return normalized
+
+    normalized["brand"] = [
