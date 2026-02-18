@@ -28,3 +28,9 @@ def infer_category(title: str | None, category: str | None) -> str:
 
 
 def infer_size(title: str | None, size: str | None) -> str:
+    normalized = str(size or "").strip().upper()
+    if normalized:
+        return normalized
+
+    title = str(title or "").lower()
+    for pattern in SETTINGS.size_patterns:
