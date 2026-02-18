@@ -46,3 +46,9 @@ def normalize_market_frame(df: pd.DataFrame) -> pd.DataFrame:
         return normalized
 
     normalized["brand"] = [
+        canonicalize_brand(title, brand)
+        for title, brand in zip(normalized.get("title", ""), normalized.get("brand", ""))
+    ]
+    normalized["category"] = [
+        infer_category(title, category)
+        for title, category in zip(normalized.get("title", ""), normalized.get("category", ""))
