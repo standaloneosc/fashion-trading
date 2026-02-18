@@ -52,3 +52,9 @@ def normalize_market_frame(df: pd.DataFrame) -> pd.DataFrame:
     normalized["category"] = [
         infer_category(title, category)
         for title, category in zip(normalized.get("title", ""), normalized.get("category", ""))
+    ]
+    normalized["size"] = [
+        infer_size(title, size)
+        for title, size in zip(normalized.get("title", ""), normalized.get("size", ""))
+    ]
+    normalized["currency"] = normalized.get("currency", "USD").fillna("USD")
