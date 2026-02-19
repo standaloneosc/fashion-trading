@@ -64,3 +64,9 @@ def normalize_market_frame(df: pd.DataFrame) -> pd.DataFrame:
             normalized[column] = pd.to_numeric(normalized[column], errors="coerce")
 
     for column in ("timestamp_observed", "created_at", "sold_at"):
+        if column in normalized:
+            normalized[column] = pd.to_datetime(normalized[column], utc=True, errors="coerce")
+
+    normalized["shipping_price"] = normalized.get("shipping_price", 0.0).fillna(0.0)
+    normalized["seller_score"] = normalized.get("seller_score", 95.0).fillna(95.0)
+    return normalized
