@@ -8,3 +8,12 @@ Signal mapping (resume language):
 """
 
 import math
+
+import numpy as np
+import pandas as pd
+
+from src.config import SETTINGS
+from src.features.normalize import normalize_market_frame
+
+
+def _rolling_bucket_features(sold: pd.DataFrame) -> pd.DataFrame:
