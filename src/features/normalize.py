@@ -58,3 +58,9 @@ def normalize_market_frame(df: pd.DataFrame) -> pd.DataFrame:
         for title, size in zip(normalized.get("title", ""), normalized.get("size", ""))
     ]
     normalized["currency"] = normalized.get("currency", "USD").fillna("USD")
+
+    for column in ("listed_price", "shipping_price", "seller_score", "sold_price"):
+        if column in normalized:
+            normalized[column] = pd.to_numeric(normalized[column], errors="coerce")
+
+    for column in ("timestamp_observed", "created_at", "sold_at"):
