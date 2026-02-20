@@ -35,3 +35,12 @@ def _rolling_bucket_features(sold: pd.DataFrame) -> pd.DataFrame:
             SETTINGS.dispersion_window_days, min_periods=2
         ).std()
         group["returns_7d"] = group["rolling_median_sold"].pct_change(7).replace([np.inf, -np.inf], np.nan).fillna(0.0)
+        group["liquidity_7d"] = group["sold_day"].rolling("7D", on=group["sold_day"]).count() if False else np.nan
+        if len(group) >= 2:
+            day_ordinal = (group["sold_day"] - group["sold_day"].min()).dt.days
+            group["momentum_30d"] = (
+                group["rolling_median_sold"]
+                .rolling(SETTINGS.momentum_window_days, min_periods=2)
+                .apply(lambda values: _safe_slope(values), raw=False)
+                .fillna(0.0)
+            )
