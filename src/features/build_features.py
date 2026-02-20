@@ -44,3 +44,12 @@ def _rolling_bucket_features(sold: pd.DataFrame) -> pd.DataFrame:
                 .apply(lambda values: _safe_slope(values), raw=False)
                 .fillna(0.0)
             )
+        else:
+            group["momentum_30d"] = 0.0
+        feature_frames.append(group)
+
+    featured = pd.concat(feature_frames, ignore_index=True)
+    return featured
+
+
+def _safe_slope(values: pd.Series) -> float:
