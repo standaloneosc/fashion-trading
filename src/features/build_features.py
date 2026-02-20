@@ -26,3 +26,12 @@ def _rolling_bucket_features(sold: pd.DataFrame) -> pd.DataFrame:
     sold["time_to_sale_days"] = (sold["sold_at"] - sold["created_at"]).dt.total_seconds().div(86400).clip(lower=1)
 
     feature_frames: list[pd.DataFrame] = []
+    for bucket, group in sold.groupby("bucket", sort=False):
+        group = group.sort_values("sold_day").copy()
+        rolling_prices = group["sold_price"].rolling(SETTINGS.dispersion_window_days, min_periods=1)
+        group["rolling_median_sold"] = group["sold_price"].rolling(SETTINGS.momentum_window_days, min_periods=1).median()
+        group["dispersion_iqr_30d"] = rolling_prices.quantile(0.75) - rolling_prices.quantile(0.25)
+        group["dispersion_std_log_30d"] = np.log(group["sold_price"].clip(lower=1)).rolling(
+            SETTINGS.dispersion_window_days, min_periods=2
+        ).std()
+        group["returns_7d"] = group["rolling_median_sold"].pct_change(7).replace([np.inf, -np.inf], np.nan).fillna(0.0)
