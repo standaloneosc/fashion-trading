@@ -62,3 +62,13 @@ def _safe_slope(values: pd.Series) -> float:
     slope = np.polyfit(x, np.nan_to_num(y, nan=np.nanmedian(y)), 1)[0]
     return float(slope)
 
+
+def _active_snapshot_features(listings: pd.DataFrame) -> pd.DataFrame:
+    if listings.empty:
+        return listings
+
+    listings = listings.sort_values("timestamp_observed").copy()
+    listings["bucket"] = listings["brand"] + "|" + listings["category"] + "|" + listings["size"]
+    listings["obs_day"] = listings["timestamp_observed"].dt.floor("D")
+    listings["listing_age_days"] = (
+        (listings["timestamp_observed"] - listings["created_at"]).dt.total_seconds().div(86400).clip(lower=0).fillna(0)
