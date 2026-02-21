@@ -72,3 +72,12 @@ def _active_snapshot_features(listings: pd.DataFrame) -> pd.DataFrame:
     listings["obs_day"] = listings["timestamp_observed"].dt.floor("D")
     listings["listing_age_days"] = (
         (listings["timestamp_observed"] - listings["created_at"]).dt.total_seconds().div(86400).clip(lower=0).fillna(0)
+    )
+
+    frames: list[pd.DataFrame] = []
+    for bucket, group in listings.groupby("bucket", sort=False):
+        group = group.sort_values("obs_day").copy()
+        daily_counts = group.groupby("obs_day")["listing_id"].transform("count")
+        group["active_depth"] = daily_counts
+        group["new_listings_24h"] = group.groupby("obs_day")["listing_id"].transform("count")
+        counts_by_day = group.groupby("obs_day")["listing_id"].transform("count")
