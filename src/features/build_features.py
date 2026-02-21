@@ -53,3 +53,12 @@ def _rolling_bucket_features(sold: pd.DataFrame) -> pd.DataFrame:
 
 
 def _safe_slope(values: pd.Series) -> float:
+    if len(values) < 2:
+        return 0.0
+    x = np.arange(len(values))
+    y = values.to_numpy(dtype=float)
+    if np.isnan(y).all():
+        return 0.0
+    slope = np.polyfit(x, np.nan_to_num(y, nan=np.nanmedian(y)), 1)[0]
+    return float(slope)
+
