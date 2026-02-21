@@ -81,3 +81,12 @@ def _active_snapshot_features(listings: pd.DataFrame) -> pd.DataFrame:
         group["active_depth"] = daily_counts
         group["new_listings_24h"] = group.groupby("obs_day")["listing_id"].transform("count")
         counts_by_day = group.groupby("obs_day")["listing_id"].transform("count")
+        group["new_listings_7d"] = counts_by_day.rolling(7, min_periods=1).sum().to_numpy()
+        frames.append(group)
+
+    return pd.concat(frames, ignore_index=True)
+
+
+def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    listings = normalize_market_frame(listings)
+    sold = normalize_market_frame(sold)
