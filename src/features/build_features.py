@@ -117,3 +117,12 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
             dispersion_iqr_30d=("dispersion_iqr_30d", "last"),
             dispersion_std_log_30d=("dispersion_std_log_30d", "last"),
             momentum_30d=("momentum_30d", "last"),
+            returns_7d=("returns_7d", "last"),
+            liquidity_7d=("sold_price", lambda s: s.tail(7).count()),
+            liquidity_30d=("sold_price", lambda s: s.tail(30).count()),
+        )
+    )
+
+    featured = listing_features.merge(sold_agg, on="bucket", how="left")
+    featured["rolling_median_sold"] = featured["rolling_median_sold"].fillna(featured["listed_price"])
+    featured["dispersion_iqr_30d"] = featured["dispersion_iqr_30d"].fillna(0.0)
