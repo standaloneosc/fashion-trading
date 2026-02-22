@@ -108,3 +108,12 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
         listing_features["liquidity_30d"] = 0.0
         listing_features["sell_through"] = 0.0
         listing_features["rarity"] = 1 / (1 + listing_features["active_depth"].fillna(0))
+        return listing_features, sold_features
+
+    sold_agg = (
+        sold_features.groupby("bucket", as_index=False)
+        .agg(
+            rolling_median_sold=("rolling_median_sold", "last"),
+            dispersion_iqr_30d=("dispersion_iqr_30d", "last"),
+            dispersion_std_log_30d=("dispersion_std_log_30d", "last"),
+            momentum_30d=("momentum_30d", "last"),
