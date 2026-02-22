@@ -126,3 +126,13 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
     featured = listing_features.merge(sold_agg, on="bucket", how="left")
     featured["rolling_median_sold"] = featured["rolling_median_sold"].fillna(featured["listed_price"])
     featured["dispersion_iqr_30d"] = featured["dispersion_iqr_30d"].fillna(0.0)
+    featured["dispersion_std_log_30d"] = featured["dispersion_std_log_30d"].fillna(0.0)
+    featured["momentum_30d"] = featured["momentum_30d"].fillna(0.0)
+    featured["returns_7d"] = featured["returns_7d"].fillna(0.0)
+    featured["liquidity_7d"] = featured["liquidity_7d"].fillna(0.0)
+    featured["liquidity_30d"] = featured["liquidity_30d"].fillna(0.0)
+    featured["sell_through"] = featured["liquidity_30d"] / (featured["liquidity_30d"] + featured["active_depth"].clip(lower=0) + 1e-9)
+    featured["rarity"] = 1 / (1 + featured["active_depth"].clip(lower=0))
+    featured["price_ratio"] = np.where(
+        featured["rolling_median_sold"].fillna(0) > 0,
+        featured["listed_price"] / featured["rolling_median_sold"].replace(0, np.nan),
