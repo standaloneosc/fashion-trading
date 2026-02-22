@@ -90,3 +90,12 @@ def _active_snapshot_features(listings: pd.DataFrame) -> pd.DataFrame:
 def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     listings = normalize_market_frame(listings)
     sold = normalize_market_frame(sold)
+    if not sold.empty:
+        sold = sold.dropna(subset=["sold_at", "sold_price", "created_at"])
+    if not listings.empty:
+        listings = listings.dropna(subset=["timestamp_observed"])
+
+    sold_features = _rolling_bucket_features(sold)
+    listing_features = _active_snapshot_features(listings)
+
+    if sold_features.empty or listing_features.empty:
