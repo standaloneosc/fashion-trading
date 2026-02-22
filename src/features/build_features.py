@@ -99,3 +99,12 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
     listing_features = _active_snapshot_features(listings)
 
     if sold_features.empty or listing_features.empty:
+        listing_features["rolling_median_sold"] = listing_features.get("listed_price", 0.0)
+        listing_features["dispersion_iqr_30d"] = 0.0
+        listing_features["dispersion_std_log_30d"] = 0.0
+        listing_features["momentum_30d"] = 0.0
+        listing_features["returns_7d"] = 0.0
+        listing_features["liquidity_7d"] = 0.0
+        listing_features["liquidity_30d"] = 0.0
+        listing_features["sell_through"] = 0.0
+        listing_features["rarity"] = 1 / (1 + listing_features["active_depth"].fillna(0))
