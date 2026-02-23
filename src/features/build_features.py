@@ -163,3 +163,12 @@ def build_training_frame(featured_listings: pd.DataFrame, sold_features: pd.Data
     history["price_ratio"] = history["price_ratio"].replace([np.inf, -np.inf], np.nan).fillna(1.0)
     history["z_score"] = (
         np.log(history["listed_price"].clip(lower=1)) - np.log(history["rolling_median_sold"].clip(lower=1))
+    ) / history["dispersion_std_log_30d"].replace(0, np.nan)
+    history["z_score"] = history["z_score"].replace([np.inf, -np.inf], np.nan).fillna(0.0)
+    history["active_depth"] = history.groupby("bucket")["listing_id"].transform("count")
+    history["sell_through"] = history.groupby("bucket")["listing_id"].transform("count") / (
+        history.groupby("bucket")["listing_id"].transform("count") + history["active_depth"] + 1e-9
+    )
+    history["rarity"] = 1 / (1 + history["active_depth"])
+    history["listing_age_days"] = history["duration_days"]
+    history["new_listings_24h"] = 1.0
