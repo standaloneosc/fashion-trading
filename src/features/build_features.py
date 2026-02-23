@@ -136,3 +136,12 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
     featured["price_ratio"] = np.where(
         featured["rolling_median_sold"].fillna(0) > 0,
         featured["listed_price"] / featured["rolling_median_sold"].replace(0, np.nan),
+        1.0,
+    )
+    featured["z_score"] = (
+        np.log(featured["listed_price"].clip(lower=1)) - np.log(featured["rolling_median_sold"].clip(lower=1))
+    ) / featured["dispersion_std_log_30d"].replace(0, np.nan)
+    featured["z_score"] = featured["z_score"].replace([np.inf, -np.inf], np.nan).fillna(0.0)
+    featured["month"] = featured["timestamp_observed"].dt.month
+    featured["day_of_week"] = featured["timestamp_observed"].dt.dayofweek
+    return featured, sold_features
