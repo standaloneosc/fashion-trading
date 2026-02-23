@@ -145,3 +145,12 @@ def build_feature_store(listings: pd.DataFrame, sold: pd.DataFrame) -> tuple[pd.
     featured["month"] = featured["timestamp_observed"].dt.month
     featured["day_of_week"] = featured["timestamp_observed"].dt.dayofweek
     return featured, sold_features
+
+
+def build_training_frame(featured_listings: pd.DataFrame, sold_features: pd.DataFrame) -> pd.DataFrame:
+    if sold_features.empty:
+        base = featured_listings.copy()
+        base["y_sale_within_horizon"] = (base["liquidity_7d"] > 0).astype(int)
+        base["duration_days"] = base["listing_age_days"].clip(lower=1) + SETTINGS.horizon_days
+        base["event_observed"] = 0
+        return base
