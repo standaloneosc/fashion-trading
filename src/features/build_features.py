@@ -154,3 +154,12 @@ def build_training_frame(featured_listings: pd.DataFrame, sold_features: pd.Data
         base["duration_days"] = base["listing_age_days"].clip(lower=1) + SETTINGS.horizon_days
         base["event_observed"] = 0
         return base
+
+    history = sold_features.copy()
+    history["y_sale_within_horizon"] = (history["time_to_sale_days"] <= SETTINGS.horizon_days).astype(int)
+    history["duration_days"] = history["time_to_sale_days"].clip(lower=1)
+    history["event_observed"] = 1
+    history["price_ratio"] = history["listed_price"] / history["rolling_median_sold"].replace(0, np.nan)
+    history["price_ratio"] = history["price_ratio"].replace([np.inf, -np.inf], np.nan).fillna(1.0)
+    history["z_score"] = (
+        np.log(history["listed_price"].clip(lower=1)) - np.log(history["rolling_median_sold"].clip(lower=1))
