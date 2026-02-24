@@ -181,3 +181,12 @@ def build_training_frame(featured_listings: pd.DataFrame, sold_features: pd.Data
 
 MODEL_FEATURES = [
     "price_ratio",
+    "z_score",
+    "liquidity_7d",
+    "liquidity_30d",
+    "active_depth",
+    "sell_through",
+    "momentum_30d",
+    "returns_7d",
+    "dispersion_iqr_30d",
+    "dispersion_std_log_30d",
