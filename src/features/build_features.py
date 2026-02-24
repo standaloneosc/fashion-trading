@@ -190,3 +190,12 @@ MODEL_FEATURES = [
     "returns_7d",
     "dispersion_iqr_30d",
     "dispersion_std_log_30d",
+    "rarity",
+    "seller_score",
+    "shipping_price",
+    "listing_age_days",
+    "new_listings_24h",
+    "new_listings_7d",
+    "month",
+    "day_of_week",
+]
