@@ -172,3 +172,12 @@ def build_training_frame(featured_listings: pd.DataFrame, sold_features: pd.Data
     history["rarity"] = 1 / (1 + history["active_depth"])
     history["listing_age_days"] = history["duration_days"]
     history["new_listings_24h"] = 1.0
+    history["new_listings_7d"] = history.groupby("bucket").cumcount() + 1
+    history["month"] = history["sold_at"].dt.month
+    history["day_of_week"] = history["sold_at"].dt.dayofweek
+    history["timestamp_observed"] = history["sold_at"]
+    return history
+
+
+MODEL_FEATURES = [
+    "price_ratio",
