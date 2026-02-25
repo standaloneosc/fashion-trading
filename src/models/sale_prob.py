@@ -17,3 +17,9 @@ from src.features.build_features import MODEL_FEATURES
 
 
 @dataclass(slots=True)
+class SaleProbabilityArtifacts:
+    model: Pipeline
+    metrics: dict[str, float | list[float]]
+
+
+def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProbabilityArtifacts:
