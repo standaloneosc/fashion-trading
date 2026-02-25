@@ -23,3 +23,9 @@ class SaleProbabilityArtifacts:
 
 
 def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProbabilityArtifacts:
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    X = df.reindex(columns=MODEL_FEATURES, fill_value=0.0).fillna(0.0)
+    y = df["y_sale_within_horizon"].astype(int)
+
+    if y.nunique() < 2 or len(df) < 8:
+        model = Pipeline(
