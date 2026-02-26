@@ -54,3 +54,9 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
     probs = model.predict_proba(X_test)[:, 1]
     calib_true, calib_pred = calibration_curve(y_test, probs, n_bins=min(5, len(y_test)))
     metrics = {
+        "auc": float(roc_auc_score(y_test, probs)) if y_test.nunique() > 1 else 0.5,
+        "log_loss": float(log_loss(y_test, probs, labels=[0, 1])),
+        "calibration_pred": [float(value) for value in calib_pred],
+        "calibration_true": [float(value) for value in calib_true],
+    }
+    report_path.write_text(json.dumps(metrics, indent=2))
