@@ -36,3 +36,9 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
         )
         synthetic_X = pd.concat([X, X]).reset_index(drop=True)
         synthetic_y = pd.Series(([0] * len(X)) + ([1] * len(X)))
+        model.fit(synthetic_X, synthetic_y)
+        metrics = {"auc": 0.5, "log_loss": 0.693, "calibration_pred": [], "calibration_true": []}
+        report_path.write_text(json.dumps(metrics, indent=2))
+        return SaleProbabilityArtifacts(model=model, metrics=metrics)
+
+    test_size = 0.25 if len(df) >= 20 else 0.5
