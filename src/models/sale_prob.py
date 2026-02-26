@@ -29,3 +29,10 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
 
     if y.nunique() < 2 or len(df) < 8:
         model = Pipeline(
+            [
+                ("scaler", StandardScaler()),
+                ("clf", LogisticRegression(max_iter=500, class_weight="balanced")),
+            ]
+        )
+        synthetic_X = pd.concat([X, X]).reset_index(drop=True)
+        synthetic_y = pd.Series(([0] * len(X)) + ([1] * len(X)))
