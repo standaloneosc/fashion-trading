@@ -42,3 +42,9 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
         return SaleProbabilityArtifacts(model=model, metrics=metrics)
 
     test_size = 0.25 if len(df) >= 20 else 0.5
+    X_train, X_test, y_train, y_test = train_test_split(X, y, shuffle=False, test_size=test_size)
+
+    model = Pipeline(
+        [
+            ("scaler", StandardScaler()),
+            ("clf", LogisticRegression(max_iter=1000, class_weight="balanced", C=1.0)),
