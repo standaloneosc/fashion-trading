@@ -48,3 +48,9 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
         [
             ("scaler", StandardScaler()),
             ("clf", LogisticRegression(max_iter=1000, class_weight="balanced", C=1.0)),
+        ]
+    )
+    model.fit(X_train, y_train)
+    probs = model.predict_proba(X_test)[:, 1]
+    calib_true, calib_pred = calibration_curve(y_test, probs, n_bins=min(5, len(y_test)))
+    metrics = {
