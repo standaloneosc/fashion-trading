@@ -11,3 +11,9 @@ from lifelines.exceptions import ConvergenceError
 
 SURVIVAL_FEATURES = [
     "price_ratio",
+    "z_score",
+    "active_depth",
+    "momentum_30d",
+    "dispersion_iqr_30d",
+    "dispersion_std_log_30d",
+    "rarity",
