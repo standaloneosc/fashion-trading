@@ -5,3 +5,9 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
+from lifelines import CoxPHFitter
+from lifelines.exceptions import ConvergenceError
+
+SURVIVAL_FEATURES = [
+    "price_ratio",
