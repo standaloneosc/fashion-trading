@@ -60,3 +60,9 @@ def fit_sale_probability_model(df: pd.DataFrame, report_path: Path) -> SaleProba
         "calibration_true": [float(value) for value in calib_true],
     }
     report_path.write_text(json.dumps(metrics, indent=2))
+    return SaleProbabilityArtifacts(model=model, metrics=metrics)
+
+
+def predict_sale_probability(model: Pipeline, df: pd.DataFrame) -> np.ndarray:
+    X = df.reindex(columns=MODEL_FEATURES, fill_value=0.0).fillna(0.0)
+    return model.predict_proba(X)[:, 1]
