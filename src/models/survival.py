@@ -36,3 +36,10 @@ def fit_survival_model(df: pd.DataFrame, report_path: Path) -> SurvivalArtifacts
     columns = SURVIVAL_FEATURES + ["duration_days", "event_observed"]
     training = df.reindex(columns=columns, fill_value=0.0).fillna(0.0)
     feature_columns = [
+        column
+        for column in SURVIVAL_FEATURES
+        if column in training and training[column].nunique(dropna=False) > 1 and training[column].std(ddof=0) > 1e-8
+    ]
+    training = training[feature_columns + ["duration_days", "event_observed"]]
+
+    if len(training) < 8 or training["duration_days"].nunique() < 2 or not feature_columns:
