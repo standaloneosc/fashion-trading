@@ -30,3 +30,9 @@ class SurvivalArtifacts:
     model: CoxPHFitter | None
     metrics: dict[str, float | dict[str, float]]
 
+
+def fit_survival_model(df: pd.DataFrame, report_path: Path) -> SurvivalArtifacts:
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    columns = SURVIVAL_FEATURES + ["duration_days", "event_observed"]
+    training = df.reindex(columns=columns, fill_value=0.0).fillna(0.0)
+    feature_columns = [
