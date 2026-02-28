@@ -24,3 +24,9 @@ SURVIVAL_FEATURES = [
     "day_of_week",
 ]
 
+
+@dataclass(slots=True)
+class SurvivalArtifacts:
+    model: CoxPHFitter | None
+    metrics: dict[str, float | dict[str, float]]
+
