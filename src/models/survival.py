@@ -17,3 +17,10 @@ SURVIVAL_FEATURES = [
     "dispersion_iqr_30d",
     "dispersion_std_log_30d",
     "rarity",
+    "seller_score",
+    "shipping_price",
+    "new_listings_7d",
+    "month",
+    "day_of_week",
+]
+
