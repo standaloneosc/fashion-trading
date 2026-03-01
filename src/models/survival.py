@@ -43,3 +43,9 @@ def fit_survival_model(df: pd.DataFrame, report_path: Path) -> SurvivalArtifacts
     training = training[feature_columns + ["duration_days", "event_observed"]]
 
     if len(training) < 8 or training["duration_days"].nunique() < 2 or not feature_columns:
+        metrics = {"concordance_index": 0.5, "coefficients": {}}
+        report_path.write_text(json.dumps(metrics, indent=2))
+        return SurvivalArtifacts(model=None, metrics=metrics)
+
+    model = CoxPHFitter(penalizer=0.20)
+    try:
