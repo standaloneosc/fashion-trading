@@ -49,3 +49,9 @@ def fit_survival_model(df: pd.DataFrame, report_path: Path) -> SurvivalArtifacts
 
     model = CoxPHFitter(penalizer=0.20)
     try:
+        model.fit(training, duration_col="duration_days", event_col="event_observed")
+    except ConvergenceError:
+        metrics = {"concordance_index": 0.5, "coefficients": {}}
+        report_path.write_text(json.dumps(metrics, indent=2))
+        return SurvivalArtifacts(model=None, metrics=metrics)
+    metrics = {
