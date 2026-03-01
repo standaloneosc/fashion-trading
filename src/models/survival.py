@@ -55,3 +55,10 @@ def fit_survival_model(df: pd.DataFrame, report_path: Path) -> SurvivalArtifacts
         report_path.write_text(json.dumps(metrics, indent=2))
         return SurvivalArtifacts(model=None, metrics=metrics)
     metrics = {
+        "concordance_index": float(model.concordance_index_),
+        "coefficients": {key: float(value) for key, value in model.params_.to_dict().items()},
+    }
+    report_path.write_text(json.dumps(metrics, indent=2))
+    return SurvivalArtifacts(model=model, metrics=metrics)
+
+
