@@ -74,3 +74,9 @@ def predict_daily_hazard(model: CoxPHFitter | None, df: pd.DataFrame) -> np.ndar
 
 
 def empirical_survival_curve(df: pd.DataFrame) -> pd.DataFrame:
+    if df.empty:
+        return pd.DataFrame({"days": [1], "survival": [1.0]})
+
+    durations = np.sort(df["duration_days"].clip(lower=1).to_numpy())
+    survival = 1.0 - np.arange(1, len(durations) + 1) / len(durations)
+    return pd.DataFrame({"days": durations, "survival": survival})
