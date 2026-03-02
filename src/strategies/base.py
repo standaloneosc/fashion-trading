@@ -5,3 +5,6 @@ from typing import Protocol
 
 import pandas as pd
 
+
+@dataclass(slots=True)
+class InventoryItem:
