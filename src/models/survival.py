@@ -68,3 +68,9 @@ def predict_daily_hazard(model: CoxPHFitter | None, df: pd.DataFrame) -> np.ndar
 
     model_columns = list(model.params_.index)
     partial_hazard = model.predict_partial_hazard(df.reindex(columns=model_columns, fill_value=0.0).fillna(0.0))
+    hazard = partial_hazard.to_numpy().astype(float)
+    hazard = hazard / (np.nanmax(hazard) + 1e-9)
+    return np.clip(0.02 + 0.18 * hazard, 0.01, 0.40)
+
+
+def empirical_survival_curve(df: pd.DataFrame) -> pd.DataFrame:
