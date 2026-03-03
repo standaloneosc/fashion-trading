@@ -8,3 +8,6 @@ import pandas as pd
 
 @dataclass(slots=True)
 class InventoryItem:
+    listing_id: str
+    brand: str
+    cost: float
