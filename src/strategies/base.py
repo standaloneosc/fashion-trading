@@ -18,3 +18,6 @@ class InventoryItem:
 
 class Strategy(Protocol):
     name: str
+
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        ...
