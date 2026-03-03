@@ -11,3 +11,7 @@ class InventoryItem:
     listing_id: str
     brand: str
     cost: float
+    ask_price: float
+    acquired_day: pd.Timestamp
+    features: dict
+
