@@ -15,3 +15,6 @@ class InventoryItem:
     acquired_day: pd.Timestamp
     features: dict
 
+
+class Strategy(Protocol):
+    name: str
