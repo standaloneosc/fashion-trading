@@ -10,3 +10,9 @@ from src.models.sale_prob import predict_sale_probability
 from src.models.survival import predict_daily_hazard
 from src.strategies.base import InventoryItem
 
+
+@dataclass(slots=True)
+class StrategyContext:
+    sale_model: object
+    survival_model: object
+
