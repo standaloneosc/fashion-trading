@@ -21,3 +21,6 @@ class Strategy(Protocol):
 
     def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
         ...
+
+    def set_prices(self, day: pd.Timestamp, inventory: list[InventoryItem], state: dict) -> None:
+        ...
