@@ -28,3 +28,8 @@ class BaseStrategy:
     def set_prices(self, day: pd.Timestamp, inventory: list[InventoryItem], state: dict) -> None:
         for item in inventory:
             holding_days = max((day - item.acquired_day).days, 0)
+            item.ask_price = max(
+                item.cost * 1.08,
+                item.features["rolling_median_sold"] * (1.055 * (0.997 ** (holding_days // 7))),
+            )
+
