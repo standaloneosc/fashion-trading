@@ -33,3 +33,9 @@ class BaseStrategy:
                 item.features["rolling_median_sold"] * (1.055 * (0.997 ** (holding_days // 7))),
             )
 
+
+class MispricingLiquidityStrategy(BaseStrategy):
+    name = "Mispricing + Liquidity"
+
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        eligible = candidates[
