@@ -16,3 +16,9 @@ class StrategyContext:
     sale_model: object
     survival_model: object
 
+
+class BaseStrategy:
+    name = "Baseline"
+
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        threshold = candidates["rolling_median_sold"] * 0.82
