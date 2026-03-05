@@ -22,3 +22,9 @@ class BaseStrategy:
 
     def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
         threshold = candidates["rolling_median_sold"] * 0.82
+        eligible = candidates[candidates["listed_price"] <= threshold].head(24)
+        return [_make_inventory_item(day, row, row["rolling_median_sold"]) for _, row in eligible.iterrows()]
+
+    def set_prices(self, day: pd.Timestamp, inventory: list[InventoryItem], state: dict) -> None:
+        for item in inventory:
+            holding_days = max((day - item.acquired_day).days, 0)
