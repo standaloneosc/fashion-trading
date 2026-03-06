@@ -39,3 +39,9 @@ class MispricingLiquidityStrategy(BaseStrategy):
 
     def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
         eligible = candidates[
+            (candidates["z_score"] <= SETTINGS.z_buy)
+            & (candidates["liquidity_7d"] >= SETTINGS.liquidity_min)
+        ].copy()
+        if eligible.empty:
+            return []
+        sale_probs = predict_sale_probability(state["sale_model"], eligible)
