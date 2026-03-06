@@ -51,3 +51,9 @@ class MispricingLiquidityStrategy(BaseStrategy):
         for _, row in eligible.iterrows():
             ask = max(row["listed_price"] * 1.1, row["rolling_median_sold"] * (1 + 0.1 * row["sale_prob"]))
             items.append(_make_inventory_item(day, row, ask))
+        return items
+
+
+class MomentumRarityStrategy(BaseStrategy):
+    name = "Momentum + Rarity"
+
