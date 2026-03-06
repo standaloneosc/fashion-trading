@@ -45,3 +45,9 @@ class MispricingLiquidityStrategy(BaseStrategy):
         if eligible.empty:
             return []
         sale_probs = predict_sale_probability(state["sale_model"], eligible)
+        eligible["sale_prob"] = sale_probs
+        eligible = eligible.sort_values(["sale_prob", "z_score"], ascending=[False, True]).head(24)
+        items: list[InventoryItem] = []
+        for _, row in eligible.iterrows():
+            ask = max(row["listed_price"] * 1.1, row["rolling_median_sold"] * (1 + 0.1 * row["sale_prob"]))
+            items.append(_make_inventory_item(day, row, ask))
