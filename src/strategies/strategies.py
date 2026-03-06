@@ -57,3 +57,8 @@ class MispricingLiquidityStrategy(BaseStrategy):
 class MomentumRarityStrategy(BaseStrategy):
     name = "Momentum + Rarity"
 
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        adjusted_fv = candidates["rolling_median_sold"] * np.exp(0.15 * candidates["momentum_30d"].clip(-1, 1))
+        entry_edge = (adjusted_fv - candidates["listed_price"]) / adjusted_fv.replace(0, np.nan)
+        tilt = entry_edge + 0.1 * candidates["rarity"] + 0.05 * candidates["momentum_30d"]
+        eligible = candidates[tilt.fillna(-999) > 0.04].copy().head(24)
