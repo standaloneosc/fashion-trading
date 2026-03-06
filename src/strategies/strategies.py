@@ -62,3 +62,9 @@ class MomentumRarityStrategy(BaseStrategy):
         entry_edge = (adjusted_fv - candidates["listed_price"]) / adjusted_fv.replace(0, np.nan)
         tilt = entry_edge + 0.1 * candidates["rarity"] + 0.05 * candidates["momentum_30d"]
         eligible = candidates[tilt.fillna(-999) > 0.04].copy().head(24)
+        return [_make_inventory_item(day, row, adjusted_fv.loc[idx] * (1 + 0.15 * row["rarity"])) for idx, row in eligible.iterrows()]
+
+
+class InventoryMarketMakingStrategy(BaseStrategy):
+    name = "Inventory MM"
+
