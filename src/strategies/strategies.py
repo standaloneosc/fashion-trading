@@ -80,3 +80,9 @@ class InventoryMarketMakingStrategy(BaseStrategy):
         return [_make_inventory_item(day, row, reservation.loc[idx] + half_spread.loc[idx]) for idx, row in eligible.iterrows()]
 
 
+class DynamicPricingStrategy(BaseStrategy):
+    name = "Dynamic Pricing"
+
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        sale_probs = predict_sale_probability(state["sale_model"], candidates)
+        eligible = candidates[sale_probs >= 0.52].copy().head(18)
