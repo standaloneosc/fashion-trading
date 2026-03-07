@@ -86,3 +86,9 @@ class DynamicPricingStrategy(BaseStrategy):
     def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
         sale_probs = predict_sale_probability(state["sale_model"], candidates)
         eligible = candidates[sale_probs >= 0.52].copy().head(18)
+        return [_make_inventory_item(day, row, row["rolling_median_sold"]) for _, row in eligible.iterrows()]
+
+    def set_prices(self, day: pd.Timestamp, inventory: list[InventoryItem], state: dict) -> None:
+        inventory_frame = pd.DataFrame([item.features for item in inventory])
+        if inventory_frame.empty:
+            return
