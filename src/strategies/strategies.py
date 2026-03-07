@@ -74,3 +74,9 @@ class InventoryMarketMakingStrategy(BaseStrategy):
             candidates["rolling_median_sold"]
             - 0.25 * inventory_exposure * candidates["dispersion_iqr_30d"].fillna(0.0) ** 2
         )
+        half_spread = 5.0 + 0.5 * candidates["dispersion_iqr_30d"].fillna(0.0) + 10.0 / (1 + candidates["liquidity_7d"])
+        bid_threshold = reservation - half_spread
+        eligible = candidates[candidates["listed_price"] <= bid_threshold].copy().head(24)
+        return [_make_inventory_item(day, row, reservation.loc[idx] + half_spread.loc[idx]) for idx, row in eligible.iterrows()]
+
+
