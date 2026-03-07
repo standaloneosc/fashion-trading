@@ -68,3 +68,9 @@ class MomentumRarityStrategy(BaseStrategy):
 class InventoryMarketMakingStrategy(BaseStrategy):
     name = "Inventory MM"
 
+    def decide_buys(self, day: pd.Timestamp, candidates: pd.DataFrame, state: dict) -> list[InventoryItem]:
+        inventory_exposure = len(state["inventory"]) / max(SETTINGS.max_inventory, 1)
+        reservation = (
+            candidates["rolling_median_sold"]
+            - 0.25 * inventory_exposure * candidates["dispersion_iqr_30d"].fillna(0.0) ** 2
+        )
