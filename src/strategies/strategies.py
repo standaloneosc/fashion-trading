@@ -97,3 +97,9 @@ class DynamicPricingStrategy(BaseStrategy):
         for item, hazard in zip(inventory, hazards):
             candidate_prices = np.linspace(item.cost * 1.02, max(item.cost * 1.4, item.features["rolling_median_sold"] * 1.2), 6)
             best_price = item.ask_price
+            best_score = -np.inf
+            for price in candidate_prices:
+                expected_profit = (price - item.cost - SETTINGS.fee_rate * price) * hazard - (SETTINGS.hold_cost_bps_day / 10000) * item.cost
+                if expected_profit > best_score:
+                    best_score = expected_profit
+                    best_price = float(price)
