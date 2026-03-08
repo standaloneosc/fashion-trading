@@ -92,3 +92,8 @@ class DynamicPricingStrategy(BaseStrategy):
         inventory_frame = pd.DataFrame([item.features for item in inventory])
         if inventory_frame.empty:
             return
+
+        hazards = predict_daily_hazard(state["survival_model"], inventory_frame)
+        for item, hazard in zip(inventory, hazards):
+            candidate_prices = np.linspace(item.cost * 1.02, max(item.cost * 1.4, item.features["rolling_median_sold"] * 1.2), 6)
+            best_price = item.ask_price
