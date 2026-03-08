@@ -109,3 +109,9 @@ class DynamicPricingStrategy(BaseStrategy):
 def _make_inventory_item(day: pd.Timestamp, row: pd.Series, ask_price: float) -> InventoryItem:
     features = row.to_dict()
     features["rolling_median_sold"] = float(features.get("rolling_median_sold", features.get("listed_price", 0.0)))
+    return InventoryItem(
+        listing_id=str(row["listing_id"]),
+        brand=str(row["brand"]),
+        cost=float(row["listed_price"]),
+        ask_price=float(max(ask_price, row["listed_price"] * 1.02)),
+        acquired_day=day,
