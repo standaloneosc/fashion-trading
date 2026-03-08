@@ -103,3 +103,9 @@ class DynamicPricingStrategy(BaseStrategy):
                 if expected_profit > best_score:
                     best_score = expected_profit
                     best_price = float(price)
+            item.ask_price = best_price
+
+
+def _make_inventory_item(day: pd.Timestamp, row: pd.Series, ask_price: float) -> InventoryItem:
+    features = row.to_dict()
+    features["rolling_median_sold"] = float(features.get("rolling_median_sold", features.get("listed_price", 0.0)))
