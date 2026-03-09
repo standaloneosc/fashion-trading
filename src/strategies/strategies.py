@@ -121,3 +121,8 @@ def _make_inventory_item(day: pd.Timestamp, row: pd.Series, ask_price: float) ->
 
 STRATEGIES = [
     BaseStrategy(),
+    MispricingLiquidityStrategy(),
+    MomentumRarityStrategy(),
+    InventoryMarketMakingStrategy(),
+    DynamicPricingStrategy(),
+]
