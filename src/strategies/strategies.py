@@ -115,3 +115,9 @@ def _make_inventory_item(day: pd.Timestamp, row: pd.Series, ask_price: float) ->
         cost=float(row["listed_price"]),
         ask_price=float(max(ask_price, row["listed_price"] * 1.02)),
         acquired_day=day,
+        features=features,
+    )
+
+
+STRATEGIES = [
+    BaseStrategy(),
