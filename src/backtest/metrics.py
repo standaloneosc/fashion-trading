@@ -22,3 +22,9 @@ def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[s
         return {
             "sim_trades": 0,
             "avg_profit_trade": 0.0,
+            "median_profit_trade": 0.0,
+            "total_pnl": 0.0,
+            "sharpe": 0.0,
+            "max_drawdown": 0.0,
+            "median_time_to_sale": 0.0,
+            "p90_time_to_sale": 0.0,
