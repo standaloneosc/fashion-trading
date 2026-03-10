@@ -34,3 +34,9 @@ def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[s
         }
 
     daily_pnl = equity_curve.set_index("day")["daily_pnl"]
+    return {
+        "sim_trades": int(len(trades)),
+        "avg_profit_trade": float(trades["profit"].mean()),
+        "median_profit_trade": float(trades["profit"].median()),
+        "total_pnl": float(trades["profit"].sum()),
+        "sharpe": sharpe_ratio(daily_pnl),
