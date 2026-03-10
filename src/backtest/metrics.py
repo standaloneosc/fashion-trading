@@ -28,3 +28,9 @@ def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[s
             "max_drawdown": 0.0,
             "median_time_to_sale": 0.0,
             "p90_time_to_sale": 0.0,
+            "win_rate": 0.0,
+            "avg_inventory": float(equity_curve.get("inventory_count", pd.Series([0])).mean()),
+            "turnover": 0.0,
+        }
+
+    daily_pnl = equity_curve.set_index("day")["daily_pnl"]
