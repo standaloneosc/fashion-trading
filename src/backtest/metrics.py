@@ -16,3 +16,9 @@ def max_drawdown(equity_curve: pd.Series) -> float:
     drawdown = equity_curve - peak
     return float(drawdown.min())
 
+
+def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[str, float]:
+    if trades.empty:
+        return {
+            "sim_trades": 0,
+            "avg_profit_trade": 0.0,
