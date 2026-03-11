@@ -58,3 +58,9 @@ def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames
 
     combined = pd.concat(non_empty_trades, ignore_index=True)
     sharpes = [
+        sharpe_ratio(frame.set_index("day")["daily_pnl"]) for frame in non_empty_curves if "daily_pnl" in frame.columns
+    ]
+    drawdowns = [
+        max_drawdown(frame.set_index("day")["equity"]) for frame in non_empty_curves if "equity" in frame.columns
+    ]
+    inventories = [float(frame["inventory_count"].mean()) for frame in non_empty_curves]
