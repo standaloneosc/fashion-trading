@@ -52,3 +52,9 @@ def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[s
 def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames: list[pd.DataFrame]) -> dict[str, float]:
     non_empty_trades = [frame for frame in trades_frames if not frame.empty]
     non_empty_curves = [frame for frame in equity_frames if not frame.empty]
+    if not non_empty_trades:
+        placeholder = pd.DataFrame(columns=["day", "daily_pnl", "equity", "inventory_count"])
+        return summarize_trades(pd.DataFrame(), placeholder)
+
+    combined = pd.concat(non_empty_trades, ignore_index=True)
+    sharpes = [
