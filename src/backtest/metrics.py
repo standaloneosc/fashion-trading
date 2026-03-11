@@ -46,3 +46,9 @@ def summarize_trades(trades: pd.DataFrame, equity_curve: pd.DataFrame) -> dict[s
         "win_rate": float((trades["profit"] > 0).mean()),
         "avg_inventory": float(equity_curve["inventory_count"].mean()),
         "turnover": float(len(trades) / max(equity_curve["inventory_count"].mean(), 1)),
+    }
+
+
+def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames: list[pd.DataFrame]) -> dict[str, float]:
+    non_empty_trades = [frame for frame in trades_frames if not frame.empty]
+    non_empty_curves = [frame for frame in equity_frames if not frame.empty]
