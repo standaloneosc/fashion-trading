@@ -70,3 +70,9 @@ def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames
 
     return {
         "sim_trades": int(len(combined)),
+        "avg_profit_trade": float(combined["profit"].mean()),
+        "median_profit_trade": float(combined["profit"].median()),
+        "total_pnl": float(combined["profit"].sum()),
+        "sharpe": sharpe_value,
+        "max_drawdown": drawdown_value,
+        "median_time_to_sale": float(combined["holding_days"].median()),
