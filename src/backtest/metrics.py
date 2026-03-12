@@ -76,3 +76,8 @@ def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames
         "sharpe": sharpe_value,
         "max_drawdown": drawdown_value,
         "median_time_to_sale": float(combined["holding_days"].median()),
+        "p90_time_to_sale": float(combined["holding_days"].quantile(0.90)),
+        "win_rate": float((combined["profit"] > 0).mean()),
+        "avg_inventory": avg_inventory,
+        "turnover": float(len(combined) / max(avg_inventory, 1)),
+    }
