@@ -64,3 +64,9 @@ def aggregate_rollout_summaries(trades_frames: list[pd.DataFrame], equity_frames
         max_drawdown(frame.set_index("day")["equity"]) for frame in non_empty_curves if "equity" in frame.columns
     ]
     inventories = [float(frame["inventory_count"].mean()) for frame in non_empty_curves]
+    sharpe_value = float(np.mean(sharpes)) if sharpes else 0.0
+    drawdown_value = float(np.mean(drawdowns)) if drawdowns else 0.0
+    avg_inventory = float(np.mean(inventories)) if inventories else 0.0
+
+    return {
+        "sim_trades": int(len(combined)),
