@@ -20,3 +20,9 @@ def run_strategy_backtest(
     hazard_scale: float = 1.0,
     dispersion_scale: float = 1.0,
     price_noise_scale: float = 1.0,
+    rng_seed: int | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, float]]:
+    if listings.empty:
+        empty_trades = pd.DataFrame(columns=["listing_id", "brand", "profit", "holding_days", "day"])
+        empty_curve = pd.DataFrame(columns=["day", "daily_pnl", "equity", "cash", "inventory_count"])
+        return empty_trades, empty_curve, summarize_trades(empty_trades, empty_curve)
