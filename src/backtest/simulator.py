@@ -15,3 +15,8 @@ from src.strategies.base import InventoryItem
 def run_strategy_backtest(
     strategy,
     listings: pd.DataFrame,
+    sale_model,
+    survival_model,
+    hazard_scale: float = 1.0,
+    dispersion_scale: float = 1.0,
+    price_noise_scale: float = 1.0,
