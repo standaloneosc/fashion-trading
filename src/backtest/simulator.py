@@ -31,3 +31,9 @@ def run_strategy_backtest(
     listings["day"] = listings["timestamp_observed"].dt.floor("D")
     inventory: list[InventoryItem] = []
     cash = SETTINGS.starting_cash
+    trades: list[dict] = []
+    equity_points: list[dict] = []
+    seed = SETTINGS.simulator_seed_base if rng_seed is None else rng_seed
+    rng = np.random.default_rng(seed)
+
+    for day, day_candidates in listings.groupby("day", sort=True):
