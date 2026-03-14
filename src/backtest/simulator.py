@@ -48,3 +48,8 @@ def run_strategy_backtest(
         }
         proposed = strategy.decide_buys(day, day_candidates, state)
         per_brand_counts = pd.Series([item.brand for item in inventory]).value_counts().to_dict()
+        purchases: list[InventoryItem] = []
+        for item in proposed:
+            if len(inventory) + len(purchases) >= SETTINGS.max_inventory:
+                continue
+            if per_brand_counts.get(item.brand, 0) >= SETTINGS.max_brand_inventory:
