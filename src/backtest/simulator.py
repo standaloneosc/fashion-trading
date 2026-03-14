@@ -37,3 +37,8 @@ def run_strategy_backtest(
     rng = np.random.default_rng(seed)
 
     for day, day_candidates in listings.groupby("day", sort=True):
+        day_candidates = day_candidates.copy()
+        day_candidates["dispersion_iqr_30d"] = day_candidates["dispersion_iqr_30d"] * dispersion_scale
+
+        state = {
+            "cash": cash,
