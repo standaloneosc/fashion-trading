@@ -26,3 +26,8 @@ def run_strategy_backtest(
         empty_trades = pd.DataFrame(columns=["listing_id", "brand", "profit", "holding_days", "day"])
         empty_curve = pd.DataFrame(columns=["day", "daily_pnl", "equity", "cash", "inventory_count"])
         return empty_trades, empty_curve, summarize_trades(empty_trades, empty_curve)
+
+    listings = listings.sort_values("timestamp_observed").copy()
+    listings["day"] = listings["timestamp_observed"].dt.floor("D")
+    inventory: list[InventoryItem] = []
+    cash = SETTINGS.starting_cash
