@@ -59,3 +59,8 @@ def run_strategy_backtest(
                 cash -= total_cost
                 purchases.append(item)
                 per_brand_counts[item.brand] = per_brand_counts.get(item.brand, 0) + 1
+        inventory.extend(purchases)
+
+        strategy.set_prices(day, inventory, state)
+        daily_pnl = 0.0
+        if inventory:
