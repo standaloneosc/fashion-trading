@@ -64,3 +64,9 @@ def run_strategy_backtest(
         strategy.set_prices(day, inventory, state)
         daily_pnl = 0.0
         if inventory:
+            inventory_frame = pd.DataFrame([item.features for item in inventory])
+            sale_probs = predict_sale_probability(sale_model, inventory_frame)
+            hazards = predict_daily_hazard(survival_model, inventory_frame)
+            sell_probs = np.clip(
+                (0.5 * sale_probs + 0.5 * hazards) * hazard_scale * SETTINGS.simulator_demand_multiplier,
+                0.02,
