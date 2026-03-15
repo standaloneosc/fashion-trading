@@ -53,3 +53,9 @@ def run_strategy_backtest(
             if len(inventory) + len(purchases) >= SETTINGS.max_inventory:
                 continue
             if per_brand_counts.get(item.brand, 0) >= SETTINGS.max_brand_inventory:
+                continue
+            total_cost = item.cost + item.features.get("shipping_price", SETTINGS.default_shipping_cost)
+            if total_cost <= cash:
+                cash -= total_cost
+                purchases.append(item)
+                per_brand_counts[item.brand] = per_brand_counts.get(item.brand, 0) + 1
