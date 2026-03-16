@@ -92,3 +92,8 @@ def run_strategy_backtest(
                             "brand": item.brand,
                             "profit": profit,
                             "holding_days": holding_days,
+                            "day": day,
+                            "sale_price": sale_price,
+                            "cost": item.cost,
+                        }
+                    )
