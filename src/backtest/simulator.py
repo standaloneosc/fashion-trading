@@ -81,3 +81,8 @@ def run_strategy_backtest(
                     fees = SETTINGS.fee_rate * sale_price + SETTINGS.fixed_fee
                     shipping = float(item.features.get("shipping_price", SETTINGS.default_shipping_cost))
                     holding_days = max((day - item.acquired_day).days, 1)
+                    holding_cost = (SETTINGS.hold_cost_bps_day / 10000) * item.cost * holding_days
+                    profit = sale_price - item.cost - fees - shipping - holding_cost
+                    cash += sale_price - fees
+                    daily_pnl += profit
+                    trades.append(
