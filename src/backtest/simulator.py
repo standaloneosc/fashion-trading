@@ -75,3 +75,9 @@ def run_strategy_backtest(
 
             remaining: list[InventoryItem] = []
             for item, sell_prob in zip(inventory, sell_probs):
+                if rng.uniform() <= sell_prob:
+                    slippage = np.clip(rng.normal(SETTINGS.slip_mean, SETTINGS.slip_std) * price_noise_scale, -0.20, 0.10)
+                    sale_price = item.ask_price * (1 + slippage)
+                    fees = SETTINGS.fee_rate * sale_price + SETTINGS.fixed_fee
+                    shipping = float(item.features.get("shipping_price", SETTINGS.default_shipping_cost))
+                    holding_days = max((day - item.acquired_day).days, 1)
