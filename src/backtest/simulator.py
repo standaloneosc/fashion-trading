@@ -86,3 +86,9 @@ def run_strategy_backtest(
                     cash += sale_price - fees
                     daily_pnl += profit
                     trades.append(
+                        {
+                            "strategy": strategy.name,
+                            "listing_id": item.listing_id,
+                            "brand": item.brand,
+                            "profit": profit,
+                            "holding_days": holding_days,
