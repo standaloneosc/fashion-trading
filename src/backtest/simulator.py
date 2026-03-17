@@ -114,3 +114,8 @@ def run_strategy_backtest(
             }
         )
 
+    trades_df = pd.DataFrame(trades)
+    equity_curve = pd.DataFrame(equity_points)
+    summary = summarize_trades(trades_df, equity_curve)
+    summary["strategy"] = strategy.name
+    return trades_df, equity_curve, summary
