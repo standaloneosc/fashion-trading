@@ -103,3 +103,8 @@ def run_strategy_backtest(
 
         marked_inventory = sum(item.ask_price for item in inventory)
         equity = cash + marked_inventory
+        equity_points.append(
+            {
+                "strategy": strategy.name,
+                "day": day,
+                "daily_pnl": daily_pnl,
