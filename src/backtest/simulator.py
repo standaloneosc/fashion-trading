@@ -97,3 +97,9 @@ def run_strategy_backtest(
                             "cost": item.cost,
                         }
                     )
+                else:
+                    remaining.append(item)
+            inventory = remaining
+
+        marked_inventory = sum(item.ask_price for item in inventory)
+        equity = cash + marked_inventory
