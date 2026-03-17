@@ -108,3 +108,9 @@ def run_strategy_backtest(
                 "strategy": strategy.name,
                 "day": day,
                 "daily_pnl": daily_pnl,
+                "equity": equity,
+                "cash": cash,
+                "inventory_count": len(inventory),
+            }
+        )
+
