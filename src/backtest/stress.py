@@ -19,3 +19,6 @@ def run_stress_tests(strategies, listings: pd.DataFrame, sale_model, survival_mo
             _, _, summary = run_strategy_backtest(
                 strategy,
                 listings,
+                sale_model,
+                survival_model,
+                hazard_scale=hazard_scale,
