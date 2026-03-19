@@ -22,3 +22,6 @@ def run_stress_tests(strategies, listings: pd.DataFrame, sale_model, survival_mo
                 sale_model,
                 survival_model,
                 hazard_scale=hazard_scale,
+                dispersion_scale=dispersion_scale,
+                price_noise_scale=price_noise_scale,
+            )
