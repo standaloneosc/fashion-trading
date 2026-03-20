@@ -25,3 +25,6 @@ def run_stress_tests(strategies, listings: pd.DataFrame, sale_model, survival_mo
                 dispersion_scale=dispersion_scale,
                 price_noise_scale=price_noise_scale,
             )
+            summary["scenario"] = scenario_name
+            rows.append(summary)
+    return pd.DataFrame(rows)
