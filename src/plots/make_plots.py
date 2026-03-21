@@ -24,3 +24,8 @@ def make_plots(
     plt.legend()
     plt.tight_layout()
     plt.savefig(output_dir / "cumulative_pnl.png")
+    plt.close()
+
+    plt.figure(figsize=(10, 6))
+    for strategy, group in equity_curves.groupby("strategy"):
+        running_peak = group["equity"].cummax()
