@@ -14,3 +14,8 @@ def make_plots(
     output_dir: Path,
 ) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(10, 6))
+    for strategy, group in equity_curves.groupby("strategy"):
+        plt.plot(group["day"], group["equity"], label=strategy)
+    plt.title("Cumulative PnL / Equity Curve")
