@@ -19,3 +19,8 @@ def make_plots(
     for strategy, group in equity_curves.groupby("strategy"):
         plt.plot(group["day"], group["equity"], label=strategy)
     plt.title("Cumulative PnL / Equity Curve")
+    plt.xlabel("Day")
+    plt.ylabel("Equity")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_dir / "cumulative_pnl.png")
