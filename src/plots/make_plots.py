@@ -39,3 +39,8 @@ def make_plots(
     plt.savefig(output_dir / "drawdown.png")
     plt.close()
 
+    plt.figure(figsize=(10, 6))
+    if not trades.empty:
+        for strategy, group in trades.groupby("strategy"):
+            plt.hist(group["profit"], bins=15, alpha=0.45, label=strategy)
+        plt.legend()
