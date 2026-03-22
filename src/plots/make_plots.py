@@ -34,3 +34,8 @@ def make_plots(
     plt.title("Drawdown")
     plt.xlabel("Day")
     plt.ylabel("Drawdown")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_dir / "drawdown.png")
+    plt.close()
+
