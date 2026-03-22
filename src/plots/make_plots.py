@@ -44,3 +44,8 @@ def make_plots(
         for strategy, group in trades.groupby("strategy"):
             plt.hist(group["profit"], bins=15, alpha=0.45, label=strategy)
         plt.legend()
+    plt.title("Profit Per Trade Distribution")
+    plt.xlabel("Profit")
+    plt.ylabel("Frequency")
+    plt.tight_layout()
+    plt.savefig(output_dir / "profit_hist.png")
