@@ -49,3 +49,8 @@ def make_plots(
     plt.ylabel("Frequency")
     plt.tight_layout()
     plt.savefig(output_dir / "profit_hist.png")
+    plt.close()
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(survival_curve["days"], survival_curve["survival"])
+    plt.title("Empirical Survival Curve")
