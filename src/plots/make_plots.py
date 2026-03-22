@@ -54,3 +54,8 @@ def make_plots(
     plt.figure(figsize=(10, 6))
     plt.plot(survival_curve["days"], survival_curve["survival"])
     plt.title("Empirical Survival Curve")
+    plt.xlabel("Days")
+    plt.ylabel("Survival Probability")
+    plt.tight_layout()
+    plt.savefig(output_dir / "survival_curve.png")
+    plt.close()
