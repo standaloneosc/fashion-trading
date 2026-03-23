@@ -18,3 +18,9 @@ from src.strategies.strategies import STRATEGIES
 
 
 def write_readme_summary(
+    strategy_comparison: pd.DataFrame,
+    stress_tests: pd.DataFrame,
+    listings: pd.DataFrame,
+    sold: pd.DataFrame,
+    output_path: Path,
+) -> None:
