@@ -44,3 +44,9 @@ Resale engine: pricing and acquisition using mispricing, liquidity, momentum, an
 
 ## Dataset
 
+- Active listings rows: {len(listings)}
+- Sold history rows: {len(sold)}
+- Multi-venue CSV panels under `data/`.
+
+## Best Strategy
+
