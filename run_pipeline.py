@@ -31,3 +31,9 @@ def write_readme_summary(
     if baseline["avg_profit_trade"] != 0:
         profit_uplift = 100 * (best["avg_profit_trade"] - baseline["avg_profit_trade"]) / abs(baseline["avg_profit_trade"])
     if baseline["sharpe"] != 0:
+        sharpe_multiple = best["sharpe"] / baseline["sharpe"]
+
+    demand_shock = stress_tests[stress_tests["scenario"] == "demand_shock"]
+    resilient = demand_shock.sort_values("sharpe", ascending=False).iloc[0]
+
+    summary = f"""# README Summary
