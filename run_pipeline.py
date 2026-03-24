@@ -37,3 +37,10 @@ def write_readme_summary(
     resilient = demand_shock.sort_values("sharpe", ascending=False).iloc[0]
 
     summary = f"""# README Summary
+
+## Problem Statement
+
+Resale engine: pricing and acquisition using mispricing, liquidity, momentum, and inventory-risk signals.
+
+## Dataset
+
