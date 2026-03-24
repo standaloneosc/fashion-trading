@@ -24,3 +24,10 @@ def write_readme_summary(
     sold: pd.DataFrame,
     output_path: Path,
 ) -> None:
+    best = strategy_comparison.sort_values("total_pnl", ascending=False).iloc[0]
+    baseline = strategy_comparison[strategy_comparison["strategy"] == "Baseline"].iloc[0]
+    profit_uplift = 0.0
+    sharpe_multiple = 0.0
+    if baseline["avg_profit_trade"] != 0:
+        profit_uplift = 100 * (best["avg_profit_trade"] - baseline["avg_profit_trade"]) / abs(baseline["avg_profit_trade"])
+    if baseline["sharpe"] != 0:
