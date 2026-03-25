@@ -70,3 +70,9 @@ Vs baseline: ~{profit_uplift:.1f}% higher average profit per trade; Sharpe ratio
 
 
 def _run_strategy_rollouts(strategy, featured_listings, sale_model, survival_model):
+    trades_frames: list[pd.DataFrame] = []
+    curve_frames: list[pd.DataFrame] = []
+    for path in range(SETTINGS.backtest_rollouts):
+        trades, curve, _ = run_strategy_backtest(
+            strategy,
+            featured_listings,
