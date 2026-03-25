@@ -57,3 +57,9 @@ Resale engine: pricing and acquisition using mispricing, liquidity, momentum, an
 - Sharpe: {best['sharpe']:.2f}
 - Max drawdown: {best['max_drawdown']:.2f}
 
+## Robustness Highlights
+
+- Most resilient under demand shock: {resilient['strategy']} with Sharpe {resilient['sharpe']:.2f}
+- Stress scenarios: demand shock, regime shift, adversarial noise.
+
+## Notes
