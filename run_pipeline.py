@@ -63,3 +63,10 @@ Resale engine: pricing and acquisition using mispricing, liquidity, momentum, an
 - Stress scenarios: demand shock, regime shift, adversarial noise.
 
 ## Notes
+
+Vs baseline: ~{profit_uplift:.1f}% higher average profit per trade; Sharpe ratio ~{sharpe_multiple:.2f}x baseline in this run.
+"""
+    output_path.write_text(summary)
+
+
+def _run_strategy_rollouts(strategy, featured_listings, sale_model, survival_model):
