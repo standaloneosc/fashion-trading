@@ -50,3 +50,10 @@ Resale engine: pricing and acquisition using mispricing, liquidity, momentum, an
 
 ## Best Strategy
 
+- Best total PnL: {best['strategy']}
+- Simulated trades: {int(best['sim_trades'])}
+- Avg profit per trade: {best['avg_profit_trade']:.2f}
+- Total PnL: {best['total_pnl']:.2f}
+- Sharpe: {best['sharpe']:.2f}
+- Max drawdown: {best['max_drawdown']:.2f}
+
