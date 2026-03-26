@@ -102,3 +102,10 @@ def main() -> None:
     strategy_summaries: list[dict] = []
     all_equity_curves: list[pd.DataFrame] = []
     all_trades: list[pd.DataFrame] = []
+    for strategy in STRATEGIES:
+        trades, curve, summary = _run_strategy_rollouts(
+            strategy,
+            featured_listings,
+            sale_artifacts.model,
+            survival_artifacts.model,
+        )
