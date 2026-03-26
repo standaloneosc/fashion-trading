@@ -96,3 +96,9 @@ def main() -> None:
     training = build_training_frame(featured_listings, sold_features)
 
     sale_artifacts = fit_sale_probability_model(training, REPORTS_DIR / "model_metrics.json")
+    survival_artifacts = fit_survival_model(training, REPORTS_DIR / "survival_metrics.json")
+    survival_curve = empirical_survival_curve(training)
+
+    strategy_summaries: list[dict] = []
+    all_equity_curves: list[pd.DataFrame] = []
+    all_trades: list[pd.DataFrame] = []
