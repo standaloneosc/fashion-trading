@@ -89,3 +89,10 @@ def _run_strategy_rollouts(strategy, featured_listings, sale_model, survival_mod
     return merged_trades, representative_curve, merged_summary
 
 
+def main() -> None:
+    ensure_directories()
+    listings, sold = load_market_data()
+    featured_listings, sold_features = build_feature_store(listings, sold)
+    training = build_training_frame(featured_listings, sold_features)
+
+    sale_artifacts = fit_sale_probability_model(training, REPORTS_DIR / "model_metrics.json")
