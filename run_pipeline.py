@@ -76,3 +76,10 @@ def _run_strategy_rollouts(strategy, featured_listings, sale_model, survival_mod
         trades, curve, _ = run_strategy_backtest(
             strategy,
             featured_listings,
+            sale_model,
+            survival_model,
+            rng_seed=SETTINGS.simulator_seed_base + path * 7919,
+        )
+        trades_frames.append(trades)
+        curve_frames.append(curve)
+    merged_summary = aggregate_rollout_summaries(trades_frames, curve_frames)
