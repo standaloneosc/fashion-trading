@@ -83,3 +83,9 @@ def _run_strategy_rollouts(strategy, featured_listings, sale_model, survival_mod
         trades_frames.append(trades)
         curve_frames.append(curve)
     merged_summary = aggregate_rollout_summaries(trades_frames, curve_frames)
+    merged_summary["strategy"] = strategy.name
+    merged_trades = pd.concat(trades_frames, ignore_index=True)
+    representative_curve = curve_frames[0]
+    return merged_trades, representative_curve, merged_summary
+
+
