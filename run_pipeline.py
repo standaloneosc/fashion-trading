@@ -122,3 +122,9 @@ def main() -> None:
     stress_tests.to_csv(REPORTS_DIR / "stress_tests.csv", index=False)
     make_plots(strategy_comparison, equity_curves, trades, survival_curve, PLOTS_DIR)
     write_readme_summary(strategy_comparison, stress_tests, featured_listings, sold, REPORTS_DIR / "README_summary.md")
+
+    print(json.dumps({"reports_dir": str(REPORTS_DIR), "strategies": strategy_comparison.to_dict(orient="records")}, indent=2))
+
+
+if __name__ == "__main__":
+    main()
