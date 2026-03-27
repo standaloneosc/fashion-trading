@@ -109,3 +109,9 @@ def main() -> None:
             sale_artifacts.model,
             survival_artifacts.model,
         )
+        strategy_summaries.append(summary)
+        all_equity_curves.append(curve)
+        all_trades.append(trades)
+
+    strategy_comparison = pd.DataFrame(strategy_summaries).sort_values("total_pnl", ascending=False)
+    equity_curves = pd.concat(all_equity_curves, ignore_index=True) if all_equity_curves else pd.DataFrame()
