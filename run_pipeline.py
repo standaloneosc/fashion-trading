@@ -115,3 +115,10 @@ def main() -> None:
 
     strategy_comparison = pd.DataFrame(strategy_summaries).sort_values("total_pnl", ascending=False)
     equity_curves = pd.concat(all_equity_curves, ignore_index=True) if all_equity_curves else pd.DataFrame()
+    trades = pd.concat(all_trades, ignore_index=True) if all_trades else pd.DataFrame()
+    stress_tests = run_stress_tests(STRATEGIES, featured_listings, sale_artifacts.model, survival_artifacts.model)
+
+    strategy_comparison.to_csv(REPORTS_DIR / "strategy_comparison.csv", index=False)
+    stress_tests.to_csv(REPORTS_DIR / "stress_tests.csv", index=False)
+    make_plots(strategy_comparison, equity_curves, trades, survival_curve, PLOTS_DIR)
+    write_readme_summary(strategy_comparison, stress_tests, featured_listings, sold, REPORTS_DIR / "README_summary.md")
